@@ -1,6 +1,6 @@
 // include the library code:
-#include <LiquidCrystal.h>
-
+#include <Wire.h>               //For I2C
+#include <LiquidCrystal_I2C.h>  //For I2C LCD
 // used example code at this link  http://www.arduino.cc/en/Tutorial/LiquidCrystalHelloWorld
 
 // initialize the library by associating any needed LCD interface pin
@@ -13,6 +13,9 @@ int button4 = 2;
 int button8 = 3; 
 int button12 = 4; 
 
+LiquidCrystal_I2C lcd(0x3F, 16, 2); // set the LCD address to 0x3F for a 16 chars and 2 line display
+
+
 void setup() {
   //set the button pin as an input
   pinMode(button4, INPUT_PULLUP);     
@@ -20,10 +23,20 @@ void setup() {
   pinMode(button12, INPUT_PULLUP);    
   
   // set up the LCD's number of columns and rows:
-  lcd.begin(16, 2);
+  lcd.init(); //initialize the lcd
+  lcd.backlight(); //open the backlight
 }
 
 void loop() {
+  /*This block tests the LCD It worked with my setup SCL and SDA are
+    supposed to be connected to A5 and A4 respectively.*/
+  lcd.setCursor(3, 0); // set the cursor to column 3, line 0
+  lcd.print("SunFounder"); // Print a message to the LCD
+  lcd.setCursor(2, 1); // set the cursor to column 2, line 1
+  lcd.print("Hello, World!"); // Print a message to the LCD.
+
+  /*Your code starts here*/
+
   //display info to user, max 32 characters, 16x2 display
   //clear display
   lcd.clear();
